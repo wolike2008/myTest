@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <link rel="stylesheet" href="css\mystyle.css">
+    <!--script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script-->
+    <script src="js/vue.js"></script>
+    <script src="js/axios.js"></script>
+    <title>欢迎首页</title>
+</head>
+<body>
+    <center>
+    <div id='home'><h1>小米粒</h1>
+        <img src="img\touxiang.jpg">
+        <hr/>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Atque adipisci ipsum distinctio odio iusto velit ducimus. Vitae quia numquam ratione animi excepturi! Autem reiciendis nobis minus maxime ratione dolore! Hic?</p>
+        <p v-if="movies.length==0">尚未获取</p>
+        
+         <div class="imglist">
+             <img v-for="img in movies" v-bind:src="apiurl+img.pic" alt="请点击">
+         </div>
+        <p><button v-on:click="getdata()">提交</button></P>
+    </div>
+    <script>
+       new Vue({
+           el:'#home',
+           data:{
+               apiurl:"https://api.dweb.club/",
+               movies:[]
+           },
+           methods:{
+               getdata(){
+                   var seft=this
+                   
+                   axios({
+                       method:'get',
+                       type:"json",
+                       
+                       
+                       url:'https://api.dweb.club/dweb-api/get-index-data/'
+                   }).then(function(res){
+                       console.log(res.data.newsdata)
+                       seft.movies=res.data.newsdata
+                   })
+               }
+           },
+       })
+    </script>
+    </center>
+</body>
+</html>
