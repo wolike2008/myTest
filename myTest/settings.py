@@ -75,16 +75,16 @@ WSGI_APPLICATION = 'myTest.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # },
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
-    'blogdb': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'myblog',
         'USER':'root',
-        'PASSWORD':'mysql2021',
-        'HOST':'192.168.73.101',
+        'PASSWORD':'123456',
+        'HOST':'192.168.73.111',
         'PORT':'3306'
     }
 }
@@ -128,6 +128,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL ='/upload/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'templates').replace('\\','/')
+MEDIA_ROOT = os.path.join(BASE_DIR,'upload').replace('\\','/')
 
 

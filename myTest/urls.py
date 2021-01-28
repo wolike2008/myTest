@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 from myblog import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    path('',views.index)
+    path('',views.index),
+    path('classes/',views.classes)
 ] + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)\
     + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
