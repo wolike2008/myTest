@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <button @click="showLogin(1)">登录</button>
-    <button>注册</button>
+    <button @click="showLogin(2)">注册</button>
     <div class="header">
         <h1>网易标题</h1>
         <img src="./assets/logo.png" alt="">
@@ -33,12 +33,11 @@
             
             </div>
         </div>
-      
-        <div class="foot">
-     Copyreight @ 2020 Mili工作室
-    </div>
-   姓名：<input id="name"  disabled='disabled'/>
-   <loginBox v-if="boxtarget" @hideBox="hideLgoin"></loginBox>
+      <loginBox v-if="boxtarget" :target="boxtarget" @hideBox="hideLgoin"></loginBox>
+        <div class="foot">Copyreight @ 2020 Mili工作室</div>
+    
+   
+   
   </div>
 </template>
 

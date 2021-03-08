@@ -11,7 +11,13 @@
                <input v-model="password" type="text" placeholder="输入密码" >
                
            </div>
-           <button @click="toLogin">点击登录</button>
+           <div v-if="target==2" class="item">
+               重复密码：
+               <input v-model="password2" type="text" placeholder="重新输入密码" >
+               
+           </div>
+           <button v-if="target==1" @click="toLogin">点击登录</button>
+           <button v-if="target==2" @click="toRegister">点击注册</button>
        </div>
      </div>
     </div>
@@ -23,16 +29,26 @@ import axios from "axios"
 import Qs from "qs"
 export default {
     name:"LoginBox",
+    props:['target'],
     data(){
         return{
             username:'',
-            password:''
+            password:'',
+            password2:''
         };
+    },
+    mounted(){
+        console.log(this.target)
     },
     methods:{
         hideSelf(){
            this.$emit("hideBox")
         },
+        //注册
+        toRegister(){
+
+        },
+        //登录
         toLogin(){
             console.log(this.username,this.password);
             var username = this.username
@@ -75,24 +91,23 @@ export default {
  #login{
        position: absolute;
        top: 0;
-       widows: 700vh;
-       height: 200vh;
+       widows: 700px;
+       height: 100vh;
        display: flex;
        justify-content: center;
        align-items: center;
+       background: #00000020;
    }
-   #loginbox{
+#loginbox{
        widows: 300px;
        height: 300px;
        border: 1px solid#000;
        
        background: #00000070;
-       display: flex;
-       justify-content: center;
-       align-items: center;
+      
        color: #fff;
    }
-   #loginbox .from .item {
+#loginbox .from .item {
        font-weight: 700;
        margin: 10px auto;
    }
