@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+     <link rel="shortcut icon" href="resizeApi.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/css/mystyle.css">
+    <!--script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script-->
+    <script src="/static/js/vue.js"></script>
+    <script src="/static/js/axios.js"></script>
+    <title>欢迎首页</title>
+</head>
+<body>
+    <center>
+    <div  id="home">
+     <div class="header">
+        <h1>{{siteinfo.title}}</h1>
+        <img src="/upload/{{siteinfo.logo}}" alt="">
+        
+     </div>
+    <hr/>
+      <div class="content">
+        <div class="menu">
+          <div v-if="item.id==choosed" v-for="item in classes" class="item" style="background:#777;color:#ffff">
+            
+            <a>[[item.text]]</a>
+          </div>
+          <div v-else v-on:click="chooseClass(item.id)" class="item">
+             <a>[[item.text]]</a>
+          </div>
+         
+         
+       
+       </div>
+        <div v-if="item.id==choosed" v-for="item in classes" class="userlist">
+          <p>[[item.text]]</p>
+            <hr/>
+            <div v-if="item.userlist.length>0" v-for="user in item.userlist" class="user">
+             <img src="/static/touxiang.jpg" alt="">
+             <p>[[user.nickName]]</p>
+             </div>
+             <p v-else>没有用户</p>
+            
+            
+            </div>
+            
+        </div>
+      </div>
+       
+        
+        
+         
+        
+    </div>
+    <script>
+       new Vue({
+           delimiters:['[[',']]'],
+           el:'#home',
+           data:{
+               choosed:1,
+               classes:[]
+           },
+           mounted(){
+               this.getData()
+           },
+           methods: {
+               getData(){
+                   
+                   
+                   axios({
+                       url:'/api/',
+                       method:'get',
+                       type:'json'
+                   }).then((res)=>{
+                       console.log(res.data.classes)
+                       this.classes=res.data.classes
+                   })
+               },
+               chooseClass(id){
+               console.log(id)
+               this.choosed=id
+               }
+           },
+       })
+    </script>
+    <div class="foot">
+     Copyreight @ 2020 Mili工作室
+    </div>
+    </center>
+</body>
+</html>
