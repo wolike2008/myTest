@@ -2,6 +2,7 @@
   <div id="home">
     <button @click="showLogin(1)">登录</button>
     <button @click="showLogin(2)">注册</button>
+    <button @click="showLogin(3)">修改</button>
     <div class="header">
         <h1>网易标题</h1>
         <img src="./assets/logo.png" alt="">
@@ -28,8 +29,7 @@
             <hr/>
              <router-view/>
             
-             <p>没有用户</p>
-            
+             
             
             </div>
         </div>

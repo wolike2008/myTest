@@ -2,11 +2,12 @@
     <div id="login" @click.self="hideSelf">
      <div id="loginbox">
        <div class="from">
-           <div class="item">
+           <div v-if="target==2 || target==1" class="item">
                用户名：
                <input v-model="username" type="text" placeholder="输入用户名" >
            </div>
-            <div class="item">
+           
+            <div v-if="target==2 || target==1" class="item">
                密 码：
                <input v-model="password" type="text" placeholder="输入密码" >
                
@@ -16,8 +17,19 @@
                <input v-model="password2" type="text" placeholder="重新输入密码" >
                
            </div>
+           <div v-if="target==3" class="item">
+               <div class="span">网站名称：</div>
+               <input v-model="sitename" type="text" placeholder="输入网站名称" >
+               
+           </div>
+           <div v-if="target==3" class="item">
+               <div class="span">图片上传：</div>
+               <input id="uploadlogo" type="file" style="whith:10px" />
+               
+           </div>
            <button v-if="target==1" @click="toLogin">点击登录</button>
            <button v-if="target==2" @click="toRegister">点击注册</button>
+           <button v-if="target==3" @click="toRegister">点击确定</button>
        </div>
      </div>
     </div>
@@ -34,13 +46,17 @@ export default {
         return{
             username:'',
             password:'',
-            password2:''
+            password2:'',
+            sitename:""
         };
     },
     mounted(){
         console.log(this.target)
     },
     methods:{
+        toUpload(){
+
+        }
         hideSelf(){
            this.$emit("hideBox")
         },
@@ -66,6 +82,7 @@ export default {
                     "Content-Type":"application/x-www-form-urlencoded"
                 }
             }).then((res)=>{
+                alert("注册成功!")
                  console.log(res)
                  })
                }
