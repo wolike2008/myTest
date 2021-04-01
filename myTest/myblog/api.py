@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password,make_password
 
 
-from myblog.models import Classes,Userinfo
+from myblog.models import Classes,Userinfo,Siteinfo
 from myblog.toJson import Classes_data,Userinfo_data
 @api_view(['GET','POST'])
 def api_test(request):
@@ -105,4 +105,27 @@ def toRegister(request):
         newUser=User(username=username,password=newPwd)
         newUser.save()
     return Response('ok')
+
+
+@api_view(['PUT','POST'])
+def uploadLogo(request):
+    
+    if request.method =="PUT":
+       sitename = request.POST['sitename']
+       print("sitename")
+       old_info=Siteinfo.objects.get(id=1)
+       old_info.title = sitename
+       new_info=Siteinfo.objects.get(id=2)
+       old_info.logo=new_info.logo
+       old_info.save()
+       return Response('ok')
+    img = request.FILES['logo'] 
+    print(img) 
+    test_siteLogo = Siteinfo.objects.get(id=2)
+    test_siteLogo.logo=img
+    test_siteLogo.save()
+    data = {
+      'img':str(test_siteLogo.logo)
+     }
+    return Response(data)
 

@@ -24,12 +24,16 @@
            </div>
            <div v-if="target==3" class="item">
                <div class="span">图片上传：</div>
-               <input id="uploadlogo" type="file" style="whith:10px" />
+               <input id="uploadlogo" @change="uploadImg($event)" type="file" style="whith:50px" />
+               
+           </div>
+           <div v-if="target==3" class="item">
+               <img :src="testLogo" alt="">
                
            </div>
            <button v-if="target==1" @click="toLogin">点击登录</button>
            <button v-if="target==2" @click="toRegister">点击注册</button>
-           <button v-if="target==3" @click="toRegister">点击确定</button>
+           <button v-if="target==3" @click="toUpload">点击确定</button>
        </div>
      </div>
     </div>
@@ -47,16 +51,57 @@ export default {
             username:'',
             password:'',
             password2:'',
-            sitename:""
+            sitename:"",
+            testLogo:"",
         };
     },
     mounted(){
         console.log(this.target)
     },
     methods:{
+        //修改网站名称
         toUpload(){
-
-        }
+            var sitename=this.sitename;
+            var logo=this.testLogo;
+            console.log(sitename);
+            if (sitename.length>0 && logo.length>0) {
+                axios({
+                    url:"http://127.0.0.1:9000/upload-logo/",
+                    method:"put",
+                     headers:{
+                    "Content-Type":"application/x-www-form-urlencoded"
+                },
+                    data:Qs.stringify({
+                        sitename,
+                        logo
+                    })
+                }).then((res)=>{
+                    console.log(res)
+                })
+            }else {
+                alert("没有新的标题和图片！！");
+            }
+        },
+        uploadImg(e){
+           var logo=e.target.files[0];
+           console.log(logo);
+           var Img=new FormData();
+           Img.append("logo",logo);
+           axios({
+               url:"http://127.0.0.1:9000/upload-logo/",
+               method:"post",
+                headers:{
+                    "Content-Type":"application/x-www-form-urlencoded"
+                },
+                data:Img
+                    
+           }).then((res)=>{
+               console.log(res.data.img)
+               if (res.data) {
+                   this.testLogo="http://127.0.0.1:9000/upload/"+res.data.img
+               }
+           })
+        },
         hideSelf(){
            this.$emit("hideBox")
         },
