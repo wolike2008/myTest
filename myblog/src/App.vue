@@ -1,11 +1,12 @@
 <template>
   <div id="home">
-    <button @click="showLogin(1)">登录</button>
-    <button @click="showLogin(2)">注册</button>
-    <button @click="showLogin(3)">修改</button>
+    <button v-if="loginType==false" @click="showLogin(1)">登录</button>
+    <button v-if="loginType==false" @click="showLogin(2)">注册</button>
+    <button v-if="loginType" @click="showLogin(3)">个人中心</button>
+    <button v-if="loginType" @click="showLogin(3)">修改</button>
     <div class="header">
-        <h1>网易标题</h1>
-        <img src="./assets/logo.png" alt="">
+        <h1>{{siteinfo.sitename}}</h1>
+        <img :src="siteinfo.logo" alt="">
         
      </div>
     <hr/>
@@ -52,10 +53,21 @@ export default {
       menuList:[],
       choosed:1,
       choosed_text:'Django框架',
-      boxtarget:0
+      boxtarget:0,
+      siteinfo:{},
+      loginType:false
     }
   },
   mounted(){
+    try {
+      if(window.localStorage.getItem('token').length>0){
+       this.loginType = true
+       }
+    } catch (error) {
+      console.log(error)
+    }
+    
+
     this.getMenuList()
   },
   methods:{
@@ -67,7 +79,8 @@ export default {
          method:'get'
        }).then(res=>{
          console.log(res);
-         this.menuList=res.data;
+         this.menuList=res.data.menu_data;
+         this.siteinfo=res.data.Siteinfo;
        });
     },
     chooseMenu(id){

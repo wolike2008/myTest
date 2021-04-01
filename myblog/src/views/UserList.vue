@@ -3,6 +3,7 @@
     <div v-for="item in imglist" :key="item.pk" class="user">
              <img :src="apiurl+'upload/'+item.headImg" alt="">
              <p>{{item.nickName}}</p>
+             <button @click="deleteUser()">删除</button>
     </div>
     
 </div>
@@ -10,6 +11,7 @@
 
 <script>
 import axios from 'axios'
+import Qs from "qs"
 export default {
     data(){
         return {
@@ -42,6 +44,26 @@ export default {
        }).then(res=>{
          console.log(res);
          this.imglist=res.data
+       });
+        },
+        deleteUser(id){
+         
+         axios({
+          url:'http://127.0.0.1:9000/get-user-list/',
+          type:'json',
+          data:Qs.stringify({
+                        id
+                     }),
+          method:'delete',
+          headers:{
+                    "Content-Type":"application/x-www-form-urlencoded"
+                }
+         }).then(res=>{
+         console.log(res);
+         if(res.data=='ok'){
+             this.getUserList(this.menuId)
+         }
+         
        });
         }
         
