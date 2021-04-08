@@ -77,13 +77,12 @@ export default {
                     })
                 }).then((res)=>{
                     console.log(res)
-<<<<<<< HEAD
+
                     if(res.data =='ok'){
                         window.location.reload()
                     }
 
-=======
->>>>>>> 0f1e195816741d6a06595ebdc5ab394dfdd7c1e1
+
                 })
             }else {
                 alert("没有新的标题和图片！！");

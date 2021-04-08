@@ -3,7 +3,7 @@
     <div v-for="item in imglist" :key="item.pk" class="user">
              <img :src="apiurl+'upload/'+item.headImg" alt="">
              <p>{{item.nickName}}</p>
-             <button @click="deleteUser()">删除</button>
+             <button @click="deleteUser(item.id)">删除</button>
     </div>
     
 </div>
